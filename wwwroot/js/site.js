@@ -1,3 +1,4 @@
+// site.js
 const uri = 'api/todoitems';
 let todos = [];
 
@@ -10,10 +11,12 @@ function getItems() {
 
 function addItem() {
     const addNameTextbox = document.getElementById('add-name');
+    const addDateTextbox = document.getElementById('add-date');
 
     const item = {
         isComplete: false,
-        name: addNameTextbox.value.trim()
+        name: addNameTextbox.value.trim(),
+        completionDate: addDateTextbox.value.trim()
     };
 
     fetch(uri, {
@@ -28,6 +31,7 @@ function addItem() {
         .then(() => {
             getItems();
             addNameTextbox.value = '';
+            addDateTextbox.value = '';
         })
         .catch(error => console.error('Unable to add item.', error));
 }
@@ -46,6 +50,7 @@ function displayEditForm(id) {
     document.getElementById('edit-name').value = item.name;
     document.getElementById('edit-id').value = item.id;
     document.getElementById('edit-isComplete').checked = item.isComplete;
+    document.getElementById('edit-date').value = item.completionDate || '';
     document.getElementById('editForm').style.display = 'block';
 }
 
@@ -54,7 +59,8 @@ function updateItem() {
     const item = {
         id: parseInt(itemId, 10),
         isComplete: document.getElementById('edit-isComplete').checked,
-        name: document.getElementById('edit-name').value.trim()
+        name: document.getElementById('edit-name').value.trim(),
+        completionDate: document.getElementById('edit-date').value.trim()
     };
 
     fetch(`${uri}/${itemId}`, {
@@ -109,15 +115,19 @@ function _displayItems(data) {
 
         let td1 = tr.insertCell(0);
         td1.appendChild(isCompleteCheckbox);
+        
+        let tdDate = tr.insertCell(1);
+        let dateNode = document.createTextNode(item.completionDate || '');
+        tdDate.appendChild(dateNode);
 
-        let td2 = tr.insertCell(1);
+        let td2 = tr.insertCell(2);
         let textNode = document.createTextNode(item.name);
         td2.appendChild(textNode);
 
-        let td3 = tr.insertCell(2);
+        let td3 = tr.insertCell(3);
         td3.appendChild(editButton);
 
-        let td4 = tr.insertCell(3);
+        let td4 = tr.insertCell(4);
         td4.appendChild(deleteButton);
     });
 
