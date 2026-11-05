@@ -1,0 +1,7 @@
+Matthew Bennett
+- Implemented Code Lab 7 and "Call an ASP.NET Core web API with JavaScript " Tutorial
+- Made the demo video for the project
+
+Peter Lam
+- Implemented Code Lab 6
+- Wrote the PDF

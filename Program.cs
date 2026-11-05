@@ -11,6 +11,10 @@ var app = builder.Build();
 
 if (builder.Environment.IsDevelopment())
 {
+    app.UseSwaggerUi(options =>
+    {
+        options.DocumentPath = "/openapi/v1.json";
+    });
     app.UseDeveloperExceptionPage();
 }
 
